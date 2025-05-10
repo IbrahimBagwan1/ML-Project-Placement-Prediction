@@ -1,4 +1,11 @@
 # Placement Prediction using Machine Learning
+## 📷 Screenshots
+
+### Home Page
+![Home Page](artifacts/home_page.png)
+
+### Prediction Page
+![Prediction Page](artifacts/predict_page.png)
 
 This project aims to predict whether a student will be placed or not based on various academic and demographic features using machine learning classification algorithms.
 
