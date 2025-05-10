@@ -180,19 +180,21 @@
 
       <button class="predict-btn" type="submit">📈 Predict Placement Possibility</button>
     </form>
-
-    {% if results is not none %}
+        
     <div class="result-box">
-      ✅ Prediction Result: 
-      <strong>
-        {% if results == 1 %}
-          Placed
-        {% else %}
-          Not Placed
-        {% endif %}
-      </strong>
+      {% if results is none %}
+        📝 Please fill in the details to get a prediction.
+      {% else %}
+        ✅ Prediction Result:
+        <strong>
+          {% if results == 1 %}
+            Placed
+          {% else %}
+            Not Placed
+          {% endif %}
+        </strong>
+      {% endif %}
     </div>
-    {% endif %}
   </div>
 </body>
 </html>
