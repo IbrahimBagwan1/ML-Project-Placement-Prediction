@@ -160,6 +160,11 @@
       </div>
 
       <div>
+        <label>Degree %</label>
+        <input type="number" name="degree_p" step="0.01" min="0" max="100" required>
+      </div>
+
+      <div>
         <label>Work Experience</label>
         <select name="workex" required>
           <option value="">Select</option>
@@ -176,12 +181,18 @@
       <button class="predict-btn" type="submit">📈 Predict Placement Possibility</button>
     </form>
 
-    {% if results %}
+    {% if results is not none %}
     <div class="result-box">
-      ✅ Prediction Result: <strong>{{ results }}</strong>
+      ✅ Prediction Result: 
+      <strong>
+        {% if results == 1 %}
+          Placed
+        {% else %}
+          Not Placed
+        {% endif %}
+      </strong>
     </div>
     {% endif %}
-
   </div>
 </body>
 </html>
