@@ -5,6 +5,7 @@ from src.MlProject.logger import logging
 import pandas as pd
 from dotenv import load_dotenv
 import pymysql
+import dill
 
 import pickle
 import numpy as np
@@ -66,3 +67,13 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
         model_report[model_name] = score
 
     return model_report, best_trained_models
+
+
+def load_object(file_path):
+  try:
+    with open(file_path, 'rb') as file_obj:
+      return dill.load(file_obj)
+  
+  except Exception as e:
+    raise CustomException(e,sys)
+    
