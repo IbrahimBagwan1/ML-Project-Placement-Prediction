@@ -48,24 +48,21 @@ def save_object(file_path, obj):
   except Exception as e:
     raise CustomException(e,sys)
 
-def evaluate_models(X_train, y_train, X_test, y_test, models, param):
-    try:
-        report = {}
+def evaluate_models(X_train, y_train, X_test, y_test, models, params):
+    from sklearn.model_selection import GridSearchCV
+    model_report = {}
+    best_trained_models = {}
 
-        for model_name in models:
-            model = models[model_name]
-            parameters = param.get(model_name, {})
+    for model_name, model in models.items():
+        param_grid = params[model_name]
+        gs = GridSearchCV(model, param_grid, cv=3, scoring='accuracy', verbose=0, n_jobs=-1)
+        gs.fit(X_train, y_train)
 
-            gs = GridSearchCV(model, parameters, cv=3, scoring='accuracy', n_jobs=-1)
-            gs.fit(X_train, y_train)
+        best_model = gs.best_estimator_
+        best_trained_models[model_name] = best_model
 
-            best_model = gs.best_estimator_
-            y_test_pred = best_model.predict(X_test)
+        y_pred = best_model.predict(X_test)
+        score = accuracy_score(y_test, y_pred)
+        model_report[model_name] = score
 
-            test_model_score = accuracy_score(y_test, y_test_pred)
-            report[model_name] = test_model_score
-
-        return report
-
-    except Exception as e:
-        raise CustomException(e, sys)
+    return model_report, best_trained_models

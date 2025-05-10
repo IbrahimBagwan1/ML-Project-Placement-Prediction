@@ -84,14 +84,18 @@ class ModelTrainer:
             }
         }
 
-        model_report: dict = evaluate_models(X_train, y_train, X_test, y_test, models, params)
+        model_report, trained_models = evaluate_models(X_train, y_train, X_test, y_test, models, params)
+
+
         
         best_model_score = max(model_report.values())
         best_model_name = list(model_report.keys())[
             list(model_report.values()).index(best_model_score)
         ]
 
-        best_model = models[best_model_name]
+        best_model = trained_models[best_model_name]
+
+
         logging.info(f"Best model found: {best_model_name} with score: {best_model_score}")
 
         save_object(
